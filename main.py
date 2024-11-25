@@ -1,3 +1,10 @@
+from os.path import split
+
+import matplotlib.pyplot as plt
+import numpy as np
+from fontTools.ttLib.tables.otTables import splitTable
+
+
 class Investment:
 	investments = []
 
@@ -18,6 +25,18 @@ class Investment:
 		for i in range(n):
 			if self.investments[i][0] == name and self.investments[i][1] == amount and self.investments[i][2] == date:
 				self.investments.remove(self.investments[i])
+				break
+
+	def getAmountOfInvestments(self):
+		return len(self.investments)
+
+	def getAmountOfInvestmentsPer(self, indexName):
+		amount = 0
+		n = len(self.investments)
+		for i in range(n):
+			if self.investments[i][0] == indexName:
+				amount += 1
+		return amount
 
 	def totalInvestedPer(self, indexName):
 		investment = 0
@@ -43,7 +62,6 @@ class Investment:
 			percentageDiff = (investment - currentPrice) / investment * 100
 			print("Investment Is Negative, Has decreased by", percentageDiff, "%")
 
-
 	def totalInvested(self):
 		investment = 0
 		n = len(self.investments)
@@ -54,13 +72,30 @@ class Investment:
 	def returnInvestments(self):
 		return self.investments
 
+	def plotPie(self):
+		n = len(self.investments)
+		nameSet = []
+
+		for i in range(n):
+			if self.investments[i][0] not in nameSet:
+				nameSet.append(self.investments[i][0])
+		print(nameSet)
+
+		split = np.array((1, n))
+		for i in range(len(nameSet)):
+			split = np.append(nameSet[i], self.getIndexInvesments(Investment, nameSet[i]))
+
+		plt.pie(split)
+		plt.show()
+
+
 
 Investment("S&P500", 75, "22/11/24")
-Investment("S&P500", 50, "22/11/24")
-Investment("Bitcoin", 100, "22/11/24")
-Investment.removeInvestments(Investment,"S&P500", -50, "22/11/24")
+Investment("Bitcoin", 50, "22/11/24")
+Investment("S&P500", 100, "22/11/24")
 print(Investment.returnInvestments(Investment))
 print(Investment.getIndexInvesments(Investment, "S&P500"))
 Investment.totalInvested(Investment)
 Investment.printInvestment(Investment, "S&P500")
-Investment.checkInvestmentPer(Investment, "S&P500", 50)
+Investment.checkInvestmentPer(Investment, "S&P500", 150)
+Investment.plotPie(Investment)
