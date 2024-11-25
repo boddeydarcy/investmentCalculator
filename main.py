@@ -1,9 +1,6 @@
-from datetime import datetime
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from matplotlib.pyplot import xlabel
 
 
 class Investment:
@@ -84,7 +81,6 @@ class Investment:
 		for i in range(len(nameSet)):
 			investmentAmt = self.totalInvestedPer(Investment, nameSet[i])
 			split = np.append(split, investmentAmt)
-
 		plt.pie(split, labels=nameSet)
 		plt.show()
 
@@ -93,8 +89,30 @@ class Investment:
 	# then the day after will be plotted on top of that value this is not accounting for whether theyve gone up or down
 	# purely just how much ive invested and how much is being invested day to day.
 	def plotGraph(self):
-		pass
+		self.investments.sort(key=lambda x: x[2], reverse=False) # Sorts the list based on the date
+		dateInvestments = []
+		valuesDates = []
+		time = []
+		runningAcca = 0
+		runningTotal = []
+		n = len(self.investments)
+		for i in range(n):
+			if self.investments[i][2] not in dateInvestments:
+				dateInvestments.append(self.investments[i][2])
 
+		for i in range(len(dateInvestments)):
+			for j in range(n):
+				if self.investments[j][2] == dateInvestments[i]:
+					runningAcca += self.investments[j][1]
+				else:
+					continue
+			runningTotal = np.append(runningTotal, [runningAcca])
+
+		time = np.append(time, [dateInvestments])
+		print(runningTotal)
+		print(time)
+		plt.plot(runningAcca, time)
+		plt.show()
 
 Investment("S&P500", 75, "22-11-24")
 Investment("Bitcoin", 50, "23-11-24")
