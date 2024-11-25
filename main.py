@@ -70,22 +70,16 @@ class Investment:
         return self.investments
 
     def plotPie(self):
-        n = len(self.investments)
         nameSet = []
-        newSplit = []
-
+        n = len(self.investments)
         for i in range(n):
             if self.investments[i][0] not in nameSet:
                 nameSet.append(self.investments[i][0])
-        print(nameSet)
 
         split = []
-        print(split)
         for i in range(len(nameSet)):
             investmentAmt = self.totalInvestedPer(Investment, nameSet[i])
-            print(investmentAmt)
             split = np.append(split, investmentAmt)
-        print(split)
 
         plt.pie(split, labels=nameSet)
         plt.show()
@@ -95,6 +89,7 @@ Investment("S&P500", 75, "22/11/24")
 Investment("Bitcoin", 50, "22/11/24")
 Investment("S&P500", 80, "22/11/24")
 Investment("Ethereum", 65, "25/11/24")
+Investment("Dogecoin", 100, "25/11/24")
 print(Investment.returnInvestments(Investment))
 print(Investment.getIndexInvesments(Investment, "S&P500"))
 Investment.totalInvested(Investment)
